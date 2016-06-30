@@ -1,6 +1,10 @@
 package com.project.cs496.tab_app;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +33,21 @@ public class TabC_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_c_fragment, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText("C");
+
+        SharedPreferences setting;
+        setting = getActivity().getSharedPreferences("User_setting",0);
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab3);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SettingActicity.class);
+                startActivity(intent);
+            }
+        });
+
+
         return rootView;
     }
 }
