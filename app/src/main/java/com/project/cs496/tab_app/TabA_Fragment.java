@@ -103,7 +103,7 @@ public class TabA_Fragment extends Fragment {
         leView.setItemAnimator(new DefaultItemAnimator());
 
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +111,9 @@ public class TabA_Fragment extends Fragment {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                
+
             }
-        });
+        });*/
 
 
         return rootView;

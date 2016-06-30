@@ -18,11 +18,11 @@
         <requestFocus/>
     </EditText>
 
-    <CheckBox
+   <!-- <CheckBox
         android:id="@+id/gps_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GPS로 정보 받아오기"/>
+        android:text="GPS로 정보 받아오기"/>-->
 
     <Button
         android:id="@+id/input_button"

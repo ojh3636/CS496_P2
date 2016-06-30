@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,9 +25,12 @@ public class SettingActicity extends AppCompatActivity {
     private SharedPreferences sf;
     private String sfName = "setting";
     private SharedPreferences.Editor editor;
+
     private double lattitude;
     private double longitude;
     private boolean save_gps;
+    private String load_str;
+    private String load_str_past;
     private static final long Min_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 
@@ -34,17 +39,20 @@ public class SettingActicity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tab_c_setting);
+        getSupportActionBar().setTitle("날씨 정보 설정");
+
 
 
         input_box = (EditText) findViewById(R.id.input_box);
         input_button = (Button) findViewById(R.id.input_button);
-        gps_checkbox = (CheckBox) findViewById(R.id.gps_checkbox);
+//        gps_checkbox = (CheckBox) findViewById(R.id.gps_checkbox);
 
         sf = getSharedPreferences(sfName, 0);
-        String load_str = sf.getString("location", "");
+        load_str = sf.getString("location", "");
 
         boolean load_gps = sf.getBoolean("is_gps", false);
-        gps_checkbox.setChecked(load_gps);
+        save_gps = load_gps;
+//        gps_checkbox.setChecked(load_gps);
 
         input_box.setText(load_str);
 
@@ -56,17 +64,23 @@ public class SettingActicity extends AppCompatActivity {
                 editor.putString("location", save_str);
                 editor.putBoolean("is_gps", save_gps);
                 editor.commit();
+
                 finish();
             }
         });
 
-        gps_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* gps_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonView.setChecked(isChecked);
+                if(isChecked)
+                    input_box.setText("");
+                else
+                    input_box.setText(load_str);
                 save_gps = isChecked;
+                buttonView.setChecked(isChecked);
+
             }
-        });
+        });*/
 
     }
 }
