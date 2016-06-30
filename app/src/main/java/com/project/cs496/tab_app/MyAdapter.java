@@ -1,4 +1,7 @@
 package com.project.cs496.tab_app;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.GridView;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -41,21 +44,21 @@ class MyAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
-        ImageView iv = (ImageView)convertView.findViewById(R.id.imageView1);
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getMetrics(metrics);
-        LayoutParams params = (LayoutParams) iv.getLayoutParams();
-        params.width = metrics.widthPixels;
-        params.height = metrics.heightPixels;
-        iv.setLayoutParams(params);
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), img[position]);
+        bmp = Bitmap.createScaledBitmap(bmp,320, 240, false);
 
+        ImageView iv = (ImageView) convertView.findViewById(R.id.imageView1);
+        iv.setAdjustViewBounds(true);
+        iv.setImageBitmap(bmp);
+        iv.setMaxWidth(320);
+        iv.setMaxHeight(240);
+        iv.setLayoutParams(new GridView.LayoutParams(250, 400));
+        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        iv.setPadding(5, 5, 5, 5);
 
         iv.setImageResource(img[position]);
+        return iv;
 
-
-
-        return convertView;
     }
 }
