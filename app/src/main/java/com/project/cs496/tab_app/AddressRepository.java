@@ -24,8 +24,8 @@ public class AddressRepository extends ModelRepository<Address> {
         return restContract;
     }
 
-    public void sync(String uid, String token, final VoidCallback callback) {
-        ImmutableMap params =  ImmutableMap.of("user_id", uid, "user_token", token);
+    public void sync(String token, String uid, final VoidCallback callback) {
+        ImmutableMap params =  ImmutableMap.of("user_token", token, "user_id", uid);
 
         invokeStaticMethod("sync", params, new Adapter.Callback() {
             @Override

@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                                 + "로그인 완료!"
                 );
                 user_id = loginResult.getAccessToken().getUserId();
-                user_token = loginResult.getAccessToken().getUserId();
+                user_token = loginResult.getAccessToken().getToken();
             }
 
                 @Override

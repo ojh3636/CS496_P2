@@ -20,6 +20,8 @@ public class MainActivity2 extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private String user_id;
+    private String user_token;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +34,10 @@ public class MainActivity2 extends AppCompatActivity {
 
         // MainActivity(LoginActivity) 로 부터 user_id, user_token 가져오기
         Intent intent_login = getIntent();
-        String user_id = intent_login.getExtras().getString("user_id");
-        String user_token = intent_login.getExtras().getString("user_token");
+        user_id = intent_login.getExtras().getString("user_id");
+        user_token = intent_login.getExtras().getString("user_token");
+
+        Log.d("user_token",user_token);
 
 
 
@@ -94,13 +98,13 @@ public class MainActivity2 extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return TabA_Fragment.newInstance();
+                    return TabA_Fragment.newInstance(user_id,user_token);
                 case 1:
                     return TabB_Fragment.newInstance();
                 case 2:
                     return TabC_Fragment.newInstance();
             }
-            return TabA_Fragment.newInstance();
+            return TabA_Fragment.newInstance(user_id,user_token);
         }
 
         @Override
