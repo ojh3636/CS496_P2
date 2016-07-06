@@ -1,8 +1,7 @@
 package com.project.cs496.tab_app;
 
+import com.strongloop.android.loopback.callbacks.ListCallback;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,32 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.strongloop.android.loopback.RestAdapter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TabA_Fragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
-
+    ArrayList<Address> data = new ArrayList<Address>();
+    private RecyclerView leView;
     public TabA_Fragment() {
     }
 
@@ -46,18 +31,19 @@ public class TabA_Fragment extends Fragment {
      */
     public static TabA_Fragment newInstance() {
         TabA_Fragment fragment = new TabA_Fragment();
-
-
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        InputStream inputStream = getResources().openRawResource(R.raw.address);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        ArrayList<Person> data = new ArrayList<Person>();
+
+
+       /* InputStream inputStream = getResources().openRawResource(R.raw.address);
+          ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+*/
+       /* ArrayList<Person> data = new ArrayList<Person>();
 
 
         int ctr;
@@ -94,13 +80,33 @@ public class TabA_Fragment extends Fragment {
             e.printStackTrace();
         }
 
-
+*/
         View rootView = inflater.inflate(R.layout.tab_a_fragment, container, false);
-        RecyclerView leView = (RecyclerView) rootView.findViewById(R.id.address_book);
-        AddressAdapter le_Adapter = new AddressAdapter(data,R.layout.tab_a_row);
-        leView.setAdapter(le_Adapter);
-        leView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        leView.setItemAnimator(new DefaultItemAnimator());
+        leView = (RecyclerView) rootView.findViewById(R.id.address_book);
+
+        RestAdapter adapter = new RestAdapter(getActivity(),"http://50.112.20.91/api");
+
+        AddressRepository repository = adapter.createRepository(AddressRepository.class);
+        repository.findAll(new ListCallback<Address>() {
+            @Override
+            public void onSuccess(List<Address> objects) {
+                data = (ArrayList<Address>) objects;
+                AddressAdapter le_Adapter = new AddressAdapter(data,R.layout.tab_a_row);
+                leView.setAdapter(le_Adapter);
+                leView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                leView.setItemAnimator(new DefaultItemAnimator());
+
+            }
+
+            public void onError(Throwable t){
+
+            }
+
+        });
+
+
+
+
 
 
        /* FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);

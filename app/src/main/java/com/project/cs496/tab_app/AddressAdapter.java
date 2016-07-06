@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 import android.content.Context;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,15 +17,18 @@ import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
+
+import com.koushikdutta.ion.Ion;
+
 /**
  * Created by q on 2016-06-29.
  */
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder>{
 
-    private ArrayList<Person> items;
+    private ArrayList<Address> items;
     private int itemLayout;
 
-    public AddressAdapter(ArrayList<Person> items,int itemLayout) {
+    public AddressAdapter(ArrayList<Address> items,int itemLayout) {
         this.items = items;
         this.itemLayout = itemLayout;
     }
@@ -36,9 +41,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder,int position) {
-        Person p = items.get(position);
+        Address p = items.get(position);
+        Ion.with(viewHolder.pic)
+                .load(p.getPicture());
         viewHolder.top.setText(p.getName());
-        viewHolder.bottom.setText(p.getPhoneNumber());
+        viewHolder.bottom.setText(p.getUser_id());
 
 
 
@@ -56,7 +63,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            pic = (ImageView)itemView.findViewById(R.id.img1);
             top = (TextView)itemView.findViewById(R.id.top);
             bottom = (TextView)itemView.findViewById(R.id.bottom);
 
